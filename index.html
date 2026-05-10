@@ -27,7 +27,6 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        /* --- STYLED BOX HEADINGS (ALL CAPS) --- */
         .box-heading {
             text-transform: uppercase;
             font-size: 1.5rem;
@@ -44,7 +43,6 @@
             box-shadow: 0 5px 10px rgba(0,0,0,0.1);
         }
 
-        /* --- FULL SIZE VEHICLE IMAGE --- */
         .vehicle-image-container {
             width: 100%;
             height: 250px;
@@ -62,7 +60,6 @@
             opacity: 0.95;
         }
 
-        /* Form Elements */
         .form-group { margin-bottom: 20px; }
         .form-group label { display: block; margin-bottom: 8px; font-weight: 700; font-size: 0.95rem; color: #444; }
         .form-control { width: 100%; padding: 14px 15px; border: 2px solid var(--border); border-radius: 8px; font-size: 1rem; transition: 0.3s; background: #fafbfc; }
@@ -73,7 +70,6 @@
         .btn:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 210, 255, 0.4); }
         .btn:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
 
-        /* Big Modern Result Card */
         .result-card { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; border-radius: 16px; padding: 30px; text-align: center; margin-top: 40px; margin-bottom: 20px; display: none; box-shadow: 0 10px 25px rgba(42, 82, 152, 0.4); }
         .res-icon { font-size: 2.5rem; margin-bottom: 10px; }
         .res-vehicle { font-size: 1.5rem; font-weight: bold; letter-spacing: 2px; color: #a8cbf5; margin-bottom: 5px; }
@@ -83,7 +79,6 @@
         .close-btn { background: rgba(255,255,255,0.2); border: none; color: white; padding: 10px 25px; border-radius: 20px; cursor: pointer; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
         .close-btn:hover { background: rgba(255,255,255,0.4); }
 
-        /* Two-Column History Tables */
         .history-section { margin-top: 30px; }
         .history-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .table-container { border: 2px solid var(--border); border-radius: 12px; overflow: hidden; background: #fff; }
@@ -91,13 +86,13 @@
         .table-scroll { max-height: 350px; overflow-y: auto; }
         
         .history-table { width: 100%; border-collapse: collapse; }
-        .history-table th { position: sticky; top: 0; background: #f8faff; color: #333; padding: 12px; text-align: center; border-bottom: 2px solid var(--border); font-size: 0.8rem; font-weight: 800; line-height: 1.4; }
-        .history-table td { padding: 12px; border-bottom: 1px solid var(--border); font-size: 0.9rem; color: #444; text-align: center; vertical-align: middle; }
+        .history-table th { position: sticky; top: 0; background: #f8faff; color: #333; padding: 12px; text-align: center; border-bottom: 2px solid var(--border); font-size: 0.75rem; font-weight: 800; line-height: 1.4; }
+        .history-table td { padding: 12px; border-bottom: 1px solid var(--border); font-size: 0.85rem; color: #444; text-align: center; vertical-align: middle; }
         
-        /* STRICT FORMAT History Date/Time Styling */
-        .date-text { font-weight: bold; color: #2c3e50; font-size: 0.85rem; display: block; }
-        .time-text { font-family: monospace; color: #e74c3c; font-size: 0.85rem; font-weight: bold; display: block; margin-top: 4px; }
-        .mileage-text { font-size: 1.2rem; font-weight: 900; color: var(--secondary); }
+        .date-text { font-weight: bold; color: #2c3e50; font-size: 0.8rem; display: block; }
+        .time-text { font-family: monospace; color: #e74c3c; font-size: 0.8rem; font-weight: bold; display: block; margin-top: 4px; }
+        .mileage-text { font-size: 1.1rem; font-weight: 900; color: var(--secondary); }
+        .odo-text { font-weight: bold; color: #555; }
 
         .loader { text-align: center; color: #888; font-size: 1rem; padding: 20px; font-weight: bold; }
         
@@ -125,17 +120,15 @@
             
             <div id="errorBox" class="error-msg"></div>
 
-            <!-- HEADING 1 -->
             <div class="box-heading">CHARGE LOG ENTRY</div>
             
-            <!-- FULL SIZE IMAGE -->
             <div class="vehicle-image-container">
                 <img id="vehicleDisplayImg" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgViN5AgBylzODrZHQjzY74tKkLed8f1WMcDdcBO_NmR3ndpA4YYw1KBJV18PSqHdsZDqW3Td3Mpsx0x0RHdxqqabLg4tukmxjgKKwB7u1PInj9stbtFdmSaNVvCvPM9zhJxfI4x3slJU03muh7wYTOqFG8ZVZWKJ-Z_DTB0aCyp5gvwr_lpEneDCkFh0zS/s320/DEFAULT.jpeg" alt="Select Vehicle">
             </div>
 
             <form id="evForm">
                 <div class="form-group">
-                    <label>DATE (DD/MM/YYYY) AND TIME (HH:MM:SS)</label>
+                    <label>DATE & TIME</label>
                     <input type="text" id="dateTimeDisplay" class="form-control live-time" readonly>
                 </div>
 
@@ -156,7 +149,6 @@
                 <button type="submit" id="submitBtn" class="btn">SAVE CHARGE LOG</button>
             </form>
 
-            <!-- RESULT CARD JUST ABOVE CHARGING HISTORY -->
             <div id="resultCard" class="result-card">
                 <div class="res-icon">✅ SAVED</div>
                 <div class="res-vehicle" id="resVehicle">VEHICLE</div>
@@ -165,42 +157,40 @@
                 <button class="close-btn" onclick="document.getElementById('resultCard').style.display='none'">Awesome</button>
             </div>
 
-            <!-- HISTORY SECTION -->
             <div class="history-section">
-                <!-- HEADING 2 -->
                 <div class="box-heading">CHARGING HISTORY</div>
                 
                 <div class="history-grid">
                     <!-- DESPRO -->
                     <div class="table-container">
-                        <div class="table-header">DESPRO</div>
+                        <div class="table-header">DESPRO 02/05/2026 21:20:48 60KM </div>
                         <div class="table-scroll">
                             <table class="history-table" id="table-despro">
                                 <thead>
                                     <tr>
-                                        <!-- STRICT HEADER FORMAT -->
                                         <th>DATE & TIME</th>
+                                        <th>ODOMETER</th>
                                         <th>MILEAGE</th>
                                     </tr>
                                 </thead>
-                                <tbody><tr><td colspan="2" class="loader">Loading Data...</td></tr></tbody>
+                                <tbody><tr><td colspan="3" class="loader">Loading Data...</td></tr></tbody>
                             </table>
                         </div>
                     </div>
 
                     <!-- LIBERTY+ -->
                     <div class="table-container">
-                        <div class="table-header" style="background:#1e3c72;">LIBERTY+</div>
+                        <div class="table-header" style="background:#1e3c72;">LIBERTY+ 02/5/2026 21:20:48 91KM</div>
                         <div class="table-scroll">
                             <table class="history-table" id="table-liberty">
                                 <thead>
                                     <tr>
-                                        <!-- STRICT HEADER FORMAT -->
                                         <th>DATE & TIME</th>
+                                        <th>ODOMETER</th>
                                         <th>MILEAGE</th>
                                     </tr>
                                 </thead>
-                                <tbody><tr><td colspan="2" class="loader">Loading Data...</td></tr></tbody>
+                                <tbody><tr><td colspan="3" class="loader">Loading Data...</td></tr></tbody>
                             </table>
                         </div>
                     </div>
@@ -216,9 +206,8 @@
 
     <script>
         // 🚨🚨 REPLACE NEW URL HERE 🚨🚨
-        const GOOGLE_APP_URL = "https://script.google.com/macros/s/AKfycby7TRHaa3iAX7L_njmzPKQAL5WwI5dUwGpul8z1LEJ8-xq5mEuSjPyNFaxnsxo2uvamqA/exec"; 
+        const GOOGLE_APP_URL = "https://script.google.com/macros/s/AKfycbzZ3UDpc7PIKpPYeuDSmbEwMwnzFE6BpdJxI6E0CX3RutkG7NAZMBY1krMHOVXVYhfgHQ/exec"; 
 
-        // Update Clock strictly in DD/MM/YYYY
         function updateClock() {
             const d = new Date();
             const dd = String(d.getDate()).padStart(2, '0');
@@ -250,7 +239,6 @@
             setTimeout(() => { imgElement.src = vehicleImages[e.target.value]; imgElement.style.opacity = 1; }, 300);
         });
 
-        // Simply splits the strict Text string provided by Code.gs and displays it perfectly
         function formatHistoryDate(dateStr) {
             if(!dateStr) return "";
             if (dateStr.includes(" ")) {
@@ -269,8 +257,10 @@
             let countD = 0, countL = 0;
 
             data.forEach(row => {
+                // 🔥 NEW: Includes the Odometer column in the table layout
                 let htmlStr = `<tr>
                     <td>${formatHistoryDate(row.date)}</td>
+                    <td><span class="odo-text">${row.odometer}</span> km</td>
                     <td><span class="mileage-text">${row.mileage}</span> km</td>
                 </tr>`;
                 
@@ -278,8 +268,8 @@
                 if (row.vehicle === 'LIBERTY+') { tBodyLiberty.innerHTML += htmlStr; countL++; }
             });
 
-            if (countD === 0) tBodyDespro.innerHTML = `<tr><td colspan="2" class="loader">No Records Yet</td></tr>`;
-            if (countL === 0) tBodyLiberty.innerHTML = `<tr><td colspan="2" class="loader">No Records Yet</td></tr>`;
+            if (countD === 0) tBodyDespro.innerHTML = `<tr><td colspan="3" class="loader">No Records Yet</td></tr>`;
+            if (countL === 0) tBodyLiberty.innerHTML = `<tr><td colspan="3" class="loader">No Records Yet</td></tr>`;
         }
 
         window.addEventListener('DOMContentLoaded', async () => {
