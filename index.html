@@ -79,23 +79,24 @@
         .close-btn { background: rgba(255,255,255,0.2); border: none; color: white; padding: 10px 25px; border-radius: 20px; cursor: pointer; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
         .close-btn:hover { background: rgba(255,255,255,0.4); }
 
+        /* Tables */
         .history-section { margin-top: 30px; }
         .history-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .table-container { border: 2px solid var(--border); border-radius: 12px; overflow: hidden; background: #fff; }
         .table-header { background: var(--secondary); color: white; padding: 15px; text-align: center; font-weight: 900; font-size: 1.1rem; letter-spacing: 2px; }
-        .table-scroll { max-height: 350px; overflow-y: auto; }
+        .table-scroll { max-height: 350px; overflow-y: auto; overflow-x: auto; } /* Added X scroll for mobile safety */
         
-        .history-table { width: 100%; border-collapse: collapse; }
-        .history-table th { position: sticky; top: 0; background: #f8faff; color: #333; padding: 12px; text-align: center; border-bottom: 2px solid var(--border); font-size: 0.75rem; font-weight: 800; line-height: 1.4; }
-        .history-table td { padding: 12px; border-bottom: 1px solid var(--border); font-size: 0.85rem; color: #444; text-align: center; vertical-align: middle; }
+        .history-table { width: 100%; border-collapse: collapse; white-space: nowrap; }
+        .history-table th { position: sticky; top: 0; background: #f8faff; color: #333; padding: 10px; text-align: center; border-bottom: 2px solid var(--border); font-size: 0.75rem; font-weight: 800; line-height: 1.4; }
+        .history-table td { padding: 10px; border-bottom: 1px solid var(--border); font-size: 0.85rem; color: #444; text-align: center; vertical-align: middle; }
         
-        .date-text { font-weight: bold; color: #2c3e50; font-size: 0.8rem; display: block; }
-        .time-text { font-family: monospace; color: #e74c3c; font-size: 0.8rem; font-weight: bold; display: block; margin-top: 4px; }
-        .mileage-text { font-size: 1.1rem; font-weight: 900; color: var(--secondary); }
+        .date-text { font-weight: bold; color: #2c3e50; font-size: 0.75rem; display: block; }
+        .time-text { font-family: monospace; color: #e74c3c; font-size: 0.75rem; font-weight: bold; display: block; margin-top: 4px; }
+        .mileage-text { font-size: 1.1rem; font-weight: 900; color: WATERvar(--secondary); }
         .odo-text { font-weight: bold; color: #555; }
+        .user-text { font-weight: 900; color: #8e44ad; font-size: 0.85rem; background: #f3e5f5; padding: 4px 8px; border-radius: 4px; }
 
         .loader { text-align: center; color: #888; font-size: 1rem; padding: 20px; font-weight: bold; }
-        
         .error-msg { display: none; background: #f8d7da; color: #721c24; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; font-weight: bold; border: 2px solid #f5c6cb; }
 
         @media (max-width: 600px) { 
@@ -111,7 +112,7 @@
     <div class="header">
         <div class="tabs">
             <div class="tab active" onclick="switchTab('ev-charging')">⚡ EV CHARGING</div>
-            <div class="tab" onclick="switchTab('other-tab')">OTHER TAB</div>
+            <div class="tab" onclick="switchTab('other-tab')">WATER</div>
         </div>
     </div>
 
@@ -128,7 +129,7 @@
 
             <form id="evForm">
                 <div class="form-group">
-                    <label>DATE & TIME</label>
+                    <label>DATE & TIME </label>
                     <input type="text" id="dateTimeDisplay" class="form-control live-time" readonly>
                 </div>
 
@@ -144,6 +145,21 @@
                 <div class="form-group">
                     <label>CURRENT ODOMETER (KM)</label>
                     <input type="number" id="odometer" class="form-control" placeholder="e.g. 1520" step="0.1" required>
+                </div>
+
+                <!-- 🔥 NEW CHARGED BY DROPDOWN -->
+                <div class="form-group">
+                    <label>CHARGED BY</label>
+                    <select id="chargedBy" class="form-control" required>
+                        <option value="" disabled selected>Select user...</option>
+                        <option value="RVK">RVK</option>
+                        <option value="OVK">OVK</option>
+                        <option value="ACHU">ACHU</option>
+                        <option value="APPU">APPU</option>
+                        <option value="SREE">SA</option>
+                        <option value="SREE">SN</option>
+                        <option value="VA">VA</option>
+                    </select>
                 </div>
 
                 <button type="submit" id="submitBtn" class="btn">SAVE CHARGE LOG</button>
@@ -163,17 +179,18 @@
                 <div class="history-grid">
                     <!-- DESPRO -->
                     <div class="table-container">
-                        <div class="table-header">DESPRO 02/05/2026 21:20:48 60KM </div>
+                        <div class="table-header">DESPRO 02/5/2026 21:20:48 60KM</div>
                         <div class="table-scroll">
                             <table class="history-table" id="table-despro">
                                 <thead>
                                     <tr>
                                         <th>DATE & TIME</th>
-                                        <th>ODOMETER</th>
+                                        <th>ODO</th>
                                         <th>MILEAGE</th>
+                                        <th>BY</th>
                                     </tr>
                                 </thead>
-                                <tbody><tr><td colspan="3" class="loader">Loading Data...</td></tr></tbody>
+                                <tbody><tr><td colspan="4" class="loader">Loading Data...</td></tr></tbody>
                             </table>
                         </div>
                     </div>
@@ -186,11 +203,12 @@
                                 <thead>
                                     <tr>
                                         <th>DATE & TIME</th>
-                                        <th>ODOMETER</th>
+                                        <th>ODO</th>
                                         <th>MILEAGE</th>
+                                        <th>BY</th>
                                     </tr>
                                 </thead>
-                                <tbody><tr><td colspan="3" class="loader">Loading Data...</td></tr></tbody>
+                                <tbody><tr><td colspan="4" class="loader">Loading Data...</td></tr></tbody>
                             </table>
                         </div>
                     </div>
@@ -199,14 +217,14 @@
         </div>
 
         <div id="other-tab" class="tab-content">
-            <div class="box-heading">OTHER FEATURES</div>
+            <div class="box-heading">WATER RECORDS</div>
             <p style="text-align:center; color:#777; font-weight:bold; margin-top:30px;">Coming soon...</p>
         </div>
     </div>
 
     <script>
         // 🚨🚨 REPLACE NEW URL HERE 🚨🚨
-        const GOOGLE_APP_URL = "https://script.google.com/macros/s/AKfycbzZ3UDpc7PIKpPYeuDSmbEwMwnzFE6BpdJxI6E0CX3RutkG7NAZMBY1krMHOVXVYhfgHQ/exec"; 
+        const GOOGLE_APP_URL = "https://script.google.com/macros/s/AKfycbxUKZGTPuLpRSxv3AhrZnaYeGYm9GyMzzavGftn0lcKxYLEq4L9OIq-VE_0k37YFiSxrA/exec"; 
 
         function updateClock() {
             const d = new Date();
@@ -257,19 +275,20 @@
             let countD = 0, countL = 0;
 
             data.forEach(row => {
-                // 🔥 NEW: Includes the Odometer column in the table layout
+                // 🔥 NEW: Includes the Charged By column in the table layout
                 let htmlStr = `<tr>
                     <td>${formatHistoryDate(row.date)}</td>
-                    <td><span class="odo-text">${row.odometer}</span> km</td>
-                    <td><span class="mileage-text">${row.mileage}</span> km</td>
+                    <td><span class="odo-text">${row.odometer}</span></td>
+                    <td><span class="mileage-text">${row.mileage}</span></td>
+                    <td><span class="user-text">${row.chargedBy}</span></td>
                 </tr>`;
                 
                 if (row.vehicle === 'DESPRO') { tBodyDespro.innerHTML += htmlStr; countD++; }
                 if (row.vehicle === 'LIBERTY+') { tBodyLiberty.innerHTML += htmlStr; countL++; }
             });
 
-            if (countD === 0) tBodyDespro.innerHTML = `<tr><td colspan="3" class="loader">No Records Yet</td></tr>`;
-            if (countL === 0) tBodyLiberty.innerHTML = `<tr><td colspan="3" class="loader">No Records Yet</td></tr>`;
+            if (countD === 0) tBodyDespro.innerHTML = `<tr><td colspan="4" class="loader">No Records Yet</td></tr>`;
+            if (countL === 0) tBodyLiberty.innerHTML = `<tr><td colspan="4" class="loader">No Records Yet</td></tr>`;
         }
 
         window.addEventListener('DOMContentLoaded', async () => {
@@ -295,7 +314,8 @@
 
             const payload = {
                 vehicle: document.getElementById('vehicle').value,
-                odometer: document.getElementById('odometer').value
+                odometer: document.getElementById('odometer').value,
+                chargedBy: document.getElementById('chargedBy').value // 🔥 Added payload field
             };
 
             try {
